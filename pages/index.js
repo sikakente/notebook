@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useEffect, useRef, useState } from "react";
+import { Chrono } from "react-chrono";
 
 export default function Home() {
   const editorRef = useRef();
@@ -19,6 +20,24 @@ export default function Home() {
   }, []);
 
   const [data, setData] = useState("");
+
+  const items = [
+    {
+      title: "May 1940",
+      cardTitle: "Dunkirk",
+      url: "http://www.history.com",
+      cardSubtitle:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+      cardDetailedText:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+      media: {
+        type: "IMAGE",
+        source: {
+          url: "https://historycouk.s3.eu-west-2.amazonaws.com/s3fs-public/styles/282x159/public/2022-02/shutterstock_1036002985-min_0.jpg",
+        },
+      },
+    },
+  ];
   return (
     <div className={styles.container}>
       <Head>
@@ -28,29 +47,33 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        {editorLoaded ? (
-          <CKEditor
-            editor={ClassicEditor}
-            data="<p>Hello from CKEditor 5!</p>"
-            onReady={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor is ready to use!", editor);
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              console.log({ event, editor, data });
-              setData(data);
-            }}
-            onBlur={(event, editor) => {
-              console.log("Blur.", editor);
-            }}
-            onFocus={(event, editor) => {
-              console.log("Focus.", editor);
-            }}
-          />
-        ) : (
-          <p>Carregando...</p>
-        )}
+        <div style={{ width: "500px", height: "400px" }}>
+          <Chrono items={items}>
+            {editorLoaded ? (
+              <CKEditor
+                editor={ClassicEditor}
+                data="<p>Hello from CKEditor 5!</p>"
+                onReady={(editor) => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log("Editor is ready to use!", editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  console.log({ event, editor, data });
+                  setData(data);
+                }}
+                onBlur={(event, editor) => {
+                  console.log("Blur.", editor);
+                }}
+                onFocus={(event, editor) => {
+                  console.log("Focus.", editor);
+                }}
+              />
+            ) : (
+              <p>Carregando...</p>
+            )}
+          </Chrono>
+        </div>
       </main>
 
       <footer className={styles.footer}>
